@@ -1,0 +1,8 @@
+name:Hello world
+on: push
+jobs:
+  hello:
+    runs-on: ubunto-latest
+    steps:
+     -name: hello world
+      run: echo "Hello ,World"
