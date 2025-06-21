@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Portal - Login</title>
+    <meta name="description" content="Hospital Management Portal - Secure login for healthcare professionals">
+    <meta name="keywords" content="hospital, portal, login, healthcare, management">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="images/logo.png" as="image">
+</head>
+<body>
+    <div class="login-box">
+        <!-- Hospital Logo -->
+        <img src="https://img.icons8.com/ios-filled/100/2f80ed/hospital-room.png" 
+             alt="Hospital Logo" 
+             class="hospital-logo"
+             loading="lazy">
+        
+        <!-- Portal Title -->
+        <div class="portal-title">Hospital Portal</div>
+        <div class="portal-subtitle">Sign in to your account</div>
+        
+        <!-- Login Form -->
+        <form id="loginForm" novalidate>
+            <label for="userid">User ID</label>
+            <input type="text" 
+                   id="userid" 
+                   name="userid" 
+                   placeholder="Enter your user ID" 
+                   required 
+                   autocomplete="username">
+            
+            <label for="password">Password</label>
+            <input type="password" 
+                   id="password" 
+                   name="password" 
+                   placeholder="Enter your password" 
+                   required 
+                   autocomplete="current-password">
+            
+            <!-- Password Strength Indicator -->
+            <div id="passwordStrength" style="font-size: 0.8rem; margin-top: -0.5rem; margin-bottom: 1rem; text-align: left; color: #666;"></div>
+            
+            <button type="submit">Login</button>
+            
+            <!-- Links -->
+            <div class="links">
+                <a href="#" id="forgotPassword">Forgot Password?</a>
+                <span>|</span>
+                <a href="#" id="contactSupport">Contact Support</a>
+            </div>
+        </form>
+    </div>
+    
+    <!-- JavaScript Files -->
+    <script src="js/validation.js"></script>
+    <script src="js/login.js"></script>
+    
+    <!-- Initialize Password Strength Indicator -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordField = document.getElementById('password');
+            const strengthIndicator = document.getElementById('passwordStrength');
+            
+            if (passwordField && strengthIndicator) {
+                new PasswordStrengthIndicator(passwordField, strengthIndicator);
+            }
+            
+            // Initialize form validator
+            const validator = new FormValidator('#loginForm');
+        });
+    </script>
+</body>
+</html> 

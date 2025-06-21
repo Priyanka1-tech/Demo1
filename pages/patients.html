@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Portal - Patients Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f6fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #56ccf2 0%, #2f80ed 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .add-patient-btn {
+            background: linear-gradient(135deg, #56ccf2 0%, #2f80ed 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .add-patient-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background: #2f80ed;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .patients-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .table-header {
+            background: #f8f9fa;
+            padding: 1rem;
+            font-weight: bold;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
+            gap: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .table-row {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
+            gap: 1rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .table-row:hover {
+            background: #f8f9fa;
+        }
+        
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status.admitted {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .status.discharged {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+        
+        .status.treatment {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .edit-btn {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .delete-btn {
+            background: #f44336;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .table-header,
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .table-header {
+                display: none;
+            }
+            
+            .table-row {
+                border: 1px solid #eee;
+                margin-bottom: 1rem;
+                border-radius: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="https://img.icons8.com/ios-filled/100/ffffff/hospital-room.png" alt="Hospital Logo">
+            <h1>Hospital Portal</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="patients.html">Patients</a>
+            <a href="doctors.html">Doctors</a>
+            <a href="../index.html">Logout</a>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <div class="page-header">
+            <h2>Patients Management</h2>
+            <a href="#" class="add-patient-btn">+ Add New Patient</a>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" placeholder="Search patients by name, ID, or room number...">
+            <button>Search</button>
+        </div>
+        
+        <div class="patients-table">
+            <div class="table-header">
+                <div>Patient ID</div>
+                <div>Name</div>
+                <div>Age</div>
+                <div>Room</div>
+                <div>Status</div>
+                <div>Actions</div>
+            </div>
+            
+            <div class="table-row">
+                <div>P001</div>
+                <div>John Doe</div>
+                <div>45</div>
+                <div>101</div>
+                <div><span class="status admitted">Admitted</span></div>
+                <div>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+            
+            <div class="table-row">
+                <div>P002</div>
+                <div>Jane Smith</div>
+                <div>32</div>
+                <div>205</div>
+                <div><span class="status treatment">In Treatment</span></div>
+                <div>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+            
+            <div class="table-row">
+                <div>P003</div>
+                <div>Mike Johnson</div>
+                <div>28</div>
+                <div>103</div>
+                <div><span class="status discharged">Discharged</span></div>
+                <div>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+            
+            <div class="table-row">
+                <div>P004</div>
+                <div>Sarah Wilson</div>
+                <div>56</div>
+                <div>302</div>
+                <div><span class="status admitted">Admitted</span></div>
+                <div>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+            
+            <div class="table-row">
+                <div>P005</div>
+                <div>David Brown</div>
+                <div>39</div>
+                <div>108</div>
+                <div><span class="status treatment">In Treatment</span></div>
+                <div>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn delete-btn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
